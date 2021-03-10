@@ -17,7 +17,7 @@ function App() {
       <NavBar></NavBar>
       <Container maxWidth="lg">
         <Form></Form>
-       
+
       </Container>
     </>
   );

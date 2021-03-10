@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -34,9 +34,20 @@ export default function BasicTextFields() {
 
   const [list, setList] = useState([]);
 
+  function FormataStringData(data) {
+    var ano = data.split("-")[0];
+    var mes = data.split("-")[1];
+    var dia = data.split("-")[2];
+
+    return `${dia}/${mes}/${ano}`;
+
+  }
+
   function addAction(e) {
     e.preventDefault();
-    let newList = [...list, { livro: livro, autor: autor, data: data }];
+
+    let date = FormataStringData(data);
+    let newList = [...list, { livro: livro, autor: autor, data: date }];
     setList(newList);
 
   }
@@ -50,7 +61,7 @@ export default function BasicTextFields() {
         <TextField id="standard-basic" label="Autor" onChange={e => setAutor(e.target.value)} />
         <TextField
           id="date"
-          label="Birthday"
+          label="Data de lançamento"
           type="date"
 
           className={classes.textField}
@@ -60,7 +71,7 @@ export default function BasicTextFields() {
         />
         <Button className={classes.b} variant="outlined" color="primary" onClick={addAction}>Cadastrar</Button>
       </form>
-      <Home></Home>
+      <Home list={list}></Home>
     </>
   );
 }

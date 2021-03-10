@@ -30,29 +30,28 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-
-
-
 const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
 });
 
-export default function CustomizedTables() {
+export default function CustomizedTables(props) {
     const classes = useStyles();
 
     const [list, setList] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
+    
+    setList(props.list)
 
-        setList([
-            { livro: 'João', autor: 'Pedro', data: '10/05/1998' },
+  }, [props.list]);
 
-        ])
-
-
-    }, []);
+  function deleteLivro(index) {
+    const itensCopy = Array.from(list);
+    itensCopy.splice(index, 1);
+    setList(itensCopy);
+}
 
     return (
         <TableContainer component={Paper}>
@@ -67,20 +66,20 @@ export default function CustomizedTables() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {list.map((row) => (
-                        <StyledTableRow key={row.name}>
+                    {list.map((row, index) => (
+                        <StyledTableRow key={index}>
                             <StyledTableCell component="th" scope="row">
                                 {row.livro}
                             </StyledTableCell>
                             <StyledTableCell align="right">{row.autor}</StyledTableCell>
                             <StyledTableCell align="right">{row.data}</StyledTableCell>
                             <StyledTableCell align="right">
-                                <Fab size="small" color="primary" aria-label="edit" className={classes.margin}>
+                                <Fab size="small" color="primary" aria-label="edit" >
                                 <EditIcon />
                                 </Fab>
                             </StyledTableCell>
                             <StyledTableCell align="right">
-                                <Fab size="small" color="secondary" aria-label="add" className={classes.margin}>
+                                <Fab size="small" color="secondary" aria-label="add" onClick={() => deleteLivro(index)}>
                                     <DeleteForeverIcon/>
                                 </Fab>
                             </StyledTableCell>
